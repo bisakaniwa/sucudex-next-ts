@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // Variável mágica da Vercel
+  directUrl = env("POSTGRES_URL_NON_POOLING") // Para migrações
+}
+
+model Succulent {
+  id             String   @id @default(uuid())
+  dexNumber      Int      @unique
+  name           String
+  description    String?
+  imageUrl       String?
+  difficulty     String?
+  
+  primaryType    String   // Obrigatório (Mínimo 1)
+  secondaryType  String?  // Opcional (Máximo 2)
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
